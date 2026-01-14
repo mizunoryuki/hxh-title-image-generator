@@ -22,9 +22,10 @@
   width: 100%;
   margin: 0;
   line-height: 2;
-  letter-spacing: -1px;
-  font-family: "Zen Kaku Gothic New", sans-serif;
+  letter-spacing: -4px;
+  font-family: "Noto Sans JP", sans-serif;
   font-style: normal;
+  font-size: 6rem;
 }
 
 .title-separator {

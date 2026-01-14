@@ -45,15 +45,9 @@ function App() {
     fetchData();
   }, [])
 
-  const fontSizeStyle = {
-    fontSize: title.title_full.length > 0 
-      ? `calc(70cqw / ${title.title_full.length} * 1.1)` 
-      : '1rem'
-  };
-
   return (
     <div className='container'>
-      <p className='title' style={fontSizeStyle}>
+      <p className='title'>
         {title && formatTitle(title.title_half, 'title')}
       </p>
       <p className='subtitle'>{title && formatTitle(title.title_full, 'subtitle')}</p>
