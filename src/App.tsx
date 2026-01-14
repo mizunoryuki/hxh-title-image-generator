@@ -1,9 +1,17 @@
-import {  useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import './App.css'
 import type { Title } from './types';
 
 function App() {
-  const [title, setTitle] = useState({title_full: '', title_half: ''})
+  const [titles, setTitles] = useState<Title[]>([])
+  const [title, setTitle] = useState({ title_full: '', title_half: '' })
+
+  const pickRandomTitle = (list: Title[]) => {
+    if (!list.length) return { title_full: 'No titles available', title_half: '' }
+    const id = Math.floor(Math.random() * list.length)
+    const chosen = list[id]
+    return { title_full: chosen.title_full, title_half: chosen.title_half }
+  }
 
   const formatTitle = (value: string,option: 'title' | 'subtitle'): ReactNode[] => {
     const parts = value.split('×')
@@ -19,8 +27,6 @@ function App() {
         )
       }
 
-      console.log(nodes)
-
       return nodes
     }, [])
   }
@@ -28,22 +34,28 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('/example-title.json');
-        const data: Title[] = await response.json();
-        
+        const response = await fetch('/example-title.json')
+        const data: Title[] = await response.json()
+
         if (!data || data.length === 0) {
-          setTitle({title_full: 'No titles available', title_half: ''});
-          return;
+          setTitle({ title_full: 'No titles available', title_half: '' })
+          return
         }
-        const id = Math.floor(Math.random() * data.length);
-        setTitle({title_full: data[id].title_full, title_half: data[id].title_half});
+
+        setTitles(data)
+        setTitle(pickRandomTitle(data))
       } catch (error) {
-        console.error('Error fetching title:', error);
-        setTitle({title_full: 'Error loading title', title_half: ''});
+        console.error('Error fetching title:', error)
+        setTitle({ title_full: 'Error loading title', title_half: '' })
       }
     }
-    fetchData();
+    fetchData()
   }, [])
+
+  const handleReroll = () => {
+    if (!titles.length) return
+    setTitle(pickRandomTitle(titles))
+  }
 
   return (
     <div className='container'>
@@ -51,6 +63,9 @@ function App() {
         {title && formatTitle(title.title_half, 'title')}
       </p>
       <p className='subtitle'>{title && formatTitle(title.title_full, 'subtitle')}</p>
+      <button className='button' onClick={handleReroll}>
+        リロール
+      </button>
     </div>
   )
 }
