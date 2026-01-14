@@ -1,10 +1,12 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
+import html2canvas from 'html2canvas'
 import './App.css'
 import type { Title } from './types';
 
 function App() {
   const [titles, setTitles] = useState<Title[]>([])
   const [title, setTitle] = useState({ title_full: '', title_half: '' })
+  const captureRef = useRef<HTMLDivElement | null>(null)
 
   const pickRandomTitle = (list: Title[]) => {
     if (!list.length) return { title_full: 'No titles available', title_half: '' }
@@ -57,15 +59,42 @@ function App() {
     setTitle(pickRandomTitle(titles))
   }
 
+  const handleScreenshot = async () => {
+    if (!captureRef.current) return
+
+    try {
+      const canvas = await html2canvas(captureRef.current, {
+        backgroundColor: '#ffffff',
+        scale: 1,
+      })
+
+      const dataUrl = canvas.toDataURL('image/png')
+      const link = document.createElement('a')
+      link.href = dataUrl
+      link.download =`${title.title_full}.png`
+      link.click()
+    } catch (error) {
+      console.error('Error taking screenshot:', error)
+    }
+  }
+
   return (
     <div className='container'>
-      <p className='title'>
-        {title && formatTitle(title.title_half, 'title')}
-      </p>
-      <p className='subtitle'>{title && formatTitle(title.title_full, 'subtitle')}</p>
-      <button className='button' onClick={handleReroll}>
-        リロール
-      </button>
+      <div className='capture-area' ref={captureRef}>
+        <p className='title'>
+          {title && formatTitle(title.title_half, 'title')}
+        </p>
+        <p className='subtitle'>{title && formatTitle(title.title_full, 'subtitle')}</p>
+      </div>
+
+      <div className='actions'>
+        <button className='button' onClick={handleScreenshot}>
+          スクショ
+        </button>
+        <button className='button' onClick={handleReroll}>
+          リロール
+        </button>
+      </div>
     </div>
   )
 }
