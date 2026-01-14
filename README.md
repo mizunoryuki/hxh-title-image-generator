@@ -1,73 +1,16 @@
-# React + TypeScript + Vite
+HxHの新アニメで各話の冒頭に表示されるタイトルコールをWebサイト上で表示するためのサイトを作成しました。
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<img width="1437" height="780" alt="スクリーンショット 2026-01-15 5 17 33" src="https://github.com/user-attachments/assets/c100a83e-e7f4-43bb-8792-9ff3b5f1b46b" />
 
-Currently, two official plugins are available:
+機能
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 画面右下のリロールボタンを押すか、ページを再ロードするたびに表示されるテキストが変わります
+- 画面右下のスクショボタンを押すことで、ランダムに表示されるテキストをスクリーンショットとして保存できます
 
-## React Compiler
+<img width="892" height="506" alt="ハイボク×ト×メンボク (1)" src="https://github.com/user-attachments/assets/e25e8b13-68a0-414f-9b84-2bfc5991c37b" />
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+※ テキストが表示されてすぐにスクショボタンを押すとCSSが正常に読み込めないまま画像を保存してしまいスタイルが崩れることがあります。スタイルが崩れている画像が生成された場合はもう一度スクショボタンを押下してください。
 
-## Expanding the ESLint configuration
+今回使用させていただいたフォントを配布していただいているサイトです。
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+https://half-a.net/sozai-page4
