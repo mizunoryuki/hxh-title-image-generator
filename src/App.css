@@ -1,0 +1,32 @@
+#root {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  overflow: hidden;
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  container-type: inline-size; 
+}
+
+.title {
+  font-weight: 900;
+  white-space: nowrap; 
+  display: block;
+  width: 100%;
+  margin: 0;
+  line-height: 3;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  line-height: 3;
+  color: #f2613b;
+  font-family: 'HunterFont', sans-serif;
+}
