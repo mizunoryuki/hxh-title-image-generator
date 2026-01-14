@@ -63,6 +63,17 @@ function App() {
     if (!captureRef.current) return
 
     try {
+      const links = Array.from(document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]'))
+      const pendingCss = links.filter((link) => !link.sheet)
+
+      if (pendingCss.length) {
+        console.warn('Stylesheets are still loading; screenshot may miss styles:', pendingCss.map((l) => l.href))
+      }
+      if (document.fonts && document.fonts.ready) {
+        await document.fonts.ready
+      }
+      await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))
+
       const canvas = await html2canvas(captureRef.current, {
         backgroundColor: '#ffffff',
         scale: 1,
@@ -71,7 +82,7 @@ function App() {
       const dataUrl = canvas.toDataURL('image/png')
       const link = document.createElement('a')
       link.href = dataUrl
-      link.download =`${title.title_full}.png`
+      link.download = `${title.title_full}.png`
       link.click()
     } catch (error) {
       console.error('Error taking screenshot:', error)
